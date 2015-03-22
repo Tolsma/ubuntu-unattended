@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # file names & paths
-tmp="~/tmp"  # destination folder to store the final iso file
+tmp="/tmp"  # destination folder to store the final iso file
 hostname="ubuntu"
 
 # define spinner function for slow tasks
@@ -45,11 +45,11 @@ function program_is_installed {
 }
 
 # print a pretty header
-echo 
+echo
 echo " +---------------------------------------------------+"
 echo " |          UNATTENDED TTC UBUNTU ISO MAKER          |"
 echo " +---------------------------------------------------+"
-echo 
+echo
 
 # ask whether to include vmware tools or not
 while true; do
@@ -174,7 +174,7 @@ umount $tmp/iso_org
 rm -rf $tmp/iso_new
 rm -rf $tmp/iso_org
 
-# print info to user  
+# print info to user
 echo " -----"
 echo " finished remastering your ubuntu iso file"
 echo " the new file is located at: $tmp/$new_iso_name"
