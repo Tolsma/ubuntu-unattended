@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # file names & paths
-tmp="/tmp"  # destination folder to store the final iso file
+tmp="./iso-tmp"  # destination folder to store the final iso file
 hostname="ubuntu"
 seed_file="config.seed"
 start_script="start.sh"
@@ -90,6 +90,12 @@ if [[ "$password" != "$password2" ]]; then
     exit
 fi
 
+# create working folders
+echo " remastering your iso file"
+mkdir -p $tmp
+mkdir -p $tmp/iso_org
+mkdir -p $tmp/iso_new
+
 # download the ubunto iso
 cd $tmp
 if [[ ! -f $tmp/$download_file ]]; then
@@ -117,12 +123,6 @@ if [ $(program_is_installed "mkpasswd") -eq 0 ] || [ $(program_is_installed "mki
     (apt-get -y install whois genisoimage > /dev/null 2>&1) &
     spinner $!
 fi
-
-# create working folders
-echo " remastering your iso file"
-mkdir -p $tmp
-mkdir -p $tmp/iso_org
-mkdir -p $tmp/iso_new
 
 # mount the image
 if grep -qs $tmp/iso_org /proc/mounts ; then
