@@ -3,6 +3,8 @@
 # file names & paths
 tmp="/tmp"  # destination folder to store the final iso file
 hostname="ubuntu"
+seed_file="config.seed"
+start_script="start.sh"
 
 # define spinner function for slow tasks
 # courtesy of http://fitnr.com/showing-a-bash-spinner.html
@@ -96,10 +98,15 @@ if [[ ! -f $tmp/$download_file ]]; then
 fi
 
 # download config seed file
-seed_file="config.seed"
 if [[ ! -f $tmp/$seed_file ]]; then
     echo -h " downloading $seed_file: "
     download "$github/raw/master/$seed_file"
+fi
+
+# download start script
+if [[ ! -f $tmp/$start_script ]]; then
+    echo -h " downloading $start_script: "
+    download "$github/raw/master/$start_script"
 fi
 
 # install required packages
@@ -133,11 +140,16 @@ cd $tmp/iso_new
 echo en > $tmp/iso_new/isolinux/lang
 
 # set late command
-late_command="chroot /target wget -O /home/$username/start.sh $github/raw/master/start.sh ;\
-    chroot /target chmod +x /home/$username/start.sh ;"
+late_command="in-target cp /cdrom/preseed/$start_script . ;\
+    in-target chmod +x $start_script ;\
+    in-target sh $start_script ;\
+    in-target rm $start_script ;"
 
 # copy the config seed file to the iso
 cp -rT $tmp/$seed_file $tmp/iso_new/preseed/$seed_file
+
+# copy the start script to the iso
+cp -rT $tmp/$start_script $tmp/iso_new/preseed/$start_script
 
 # include firstrun script
 echo "
@@ -173,6 +185,8 @@ spinner $!
 umount $tmp/iso_org
 rm -rf $tmp/iso_new
 rm -rf $tmp/iso_org
+rm -rf $tmp/$seed_file
+rm -rf $tmp/$start_script
 
 # print info to user
 echo " -----"
@@ -196,3 +210,4 @@ unset download_location
 unset new_iso_name
 unset tmp
 unset seed_file
+unset start_script
