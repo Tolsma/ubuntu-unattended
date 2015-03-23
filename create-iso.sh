@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # file names & paths
-tmp="./iso-tmp"  # destination folder to store the final iso file
+tmp="/iso-tmp"  # destination folder to store the final iso file
 hostname="ubuntu"
 seed_file="config.seed"
 start_script="start.sh"
@@ -29,7 +29,7 @@ download()
 {
     local url=$1
     echo -n "    "
-    wget --progress=dot $url 2>&1 | grep --line-buffered "%" | \
+    wget --progress=dot -N $url 2>&1 | grep --line-buffered "%" | \
         sed -u -e "s,\.,,g" | awk '{printf("\b\b\b\b%4s", $2)}'
     echo -ne "\b\b\b\b"
     echo " DONE"
@@ -105,13 +105,13 @@ fi
 
 # download config seed file
 if [[ ! -f $tmp/$seed_file ]]; then
-    echo -h " downloading $seed_file: "
+    echo -n " downloading $seed_file: "
     download "$github/raw/master/$seed_file"
 fi
 
 # download start script
 if [[ ! -f $tmp/$start_script ]]; then
-    echo -h " downloading $start_script: "
+    echo -n " downloading $start_script: "
     download "$github/raw/master/$start_script"
 fi
 
@@ -136,7 +136,6 @@ fi
 spinner $!
 
 # set the language for the installation menu
-cd $tmp/iso_new
 echo en > $tmp/iso_new/isolinux/lang
 
 # set late command
