@@ -60,10 +60,10 @@ d-i netcfg/disable_autoconfig                               boolean     true
 # Static network configuration.
 #
 # IPv4 example
-d-i netcfg/get_ipaddress                                    string      192.168.1.42
-d-i netcfg/get_netmask                                      string      255.255.255.0
-d-i netcfg/get_gateway                                      string      192.168.1.1
-d-i netcfg/get_nameservers                                  string      192.168.1.1
+d-i netcfg/get_ipaddress                                    string      82.94.249.68
+d-i netcfg/get_netmask                                      string      255.255.255.248
+d-i netcfg/get_gateway                                      string      82.94.249.65
+d-i netcfg/get_nameservers                                  string      194.109.6.66
 d-i netcfg/confirm_static                                   boolean     true
 #
 # IPv6 example
@@ -122,7 +122,7 @@ d-i partman-auto/disk                                       string      /dev/sda
 # - lvm:     use LVM to partition the disk
 # - crypto:  use LVM within an encrypted partition
 d-i partman-auto/method                                     string      lvm
- 
+
 # If one of the disks that are going to be automatically partitioned
 # contains an old LVM configuration, the user will normally receive a
 # warning. This can be preseeded away...
@@ -132,18 +132,18 @@ d-i partman-md/device_remove_md                             boolean     true
 # And the same goes for the confirmation to write the lvm partitions.
 d-i partman-lvm/confirm                                     boolean     true
 d-i partman-lvm/confirm_nooverwrite                         boolean     true
- 
+
 # You can choose one of the three predefined partitioning recipes:
 # - atomic: all files in one partition
 # - home:   separate /home partition
 # - multi:  separate /home, /usr, /var, and /tmp partitions
 d-i partman-auto/choose_recipe                              select      home
- 
+
 # Or provide a recipe of your own...
 # If you have a way to get a recipe file into the d-i environment, you can
 # just point at it.
 #d-i partman-auto/expert_recipe_file string /hd-media/recipe
- 
+
 # If not, you can put an entire recipe into the preconfiguration file in one
 # (logical) line. This example creates a small /boot partition, suitable
 # swap, and uses the rest of the space for the root partition:
@@ -163,26 +163,26 @@ d-i partman-auto/choose_recipe                              select      home
 #              64 512 300% linux-swap                          \
 #                      method{ swap } format{ }                \
 #              .
- 
+
 # The full recipe format is documented in the file partman-auto-recipe.txt
 # included in the 'debian-installer' package or available from D-I source
 # repository. This also documents how to specify settings such as file
 # system labels, volume group names and which physical devices to include
 # in a volume group.
- 
+
 # This makes partman automatically partition without confirmation, provided
 # that you told it what to do using one of the methods above.
 d-i partman-partitioning/confirm_write_new_label            boolean     true
 #d-i partman/choose_partition select finish
 d-i partman/confirm                                         boolean     true
 d-i partman/confirm_nooverwrite                             boolean     true
- 
+
 ## Controlling how partitions are mounted
 # The default is to mount by UUID, but you can also choose "traditional" to
 # use traditional device names, or "label" to try filesystem labels before
 # falling back to UUIDs.
 d-i partman/mount_style select uuid
- 
+
 # grub boot loader
 d-i grub-installer/only_debian                              boolean     true
 d-i grub-installer/with_other_os                            boolean     true
