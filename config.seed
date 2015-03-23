@@ -170,13 +170,20 @@ d-i partman-auto/choose_recipe                              select      home
 # system labels, volume group names and which physical devices to include
 # in a volume group.
 
+# If you just want to change the default filesystem from ext3 to something
+# else, you can do that without providing a full recipe.
+d-i partman/default_filesystem                              string      ext4
+
 # This makes partman automatically partition without confirmation, provided
 # that you told it what to do using one of the methods above.
 d-i partman-partitioning/confirm_write_new_label            boolean     true
-#d-i partman/choose_partition                                select      finish
-d-i partman/choose_partition                                select      Finish partitioning and write changes to disk
+d-i partman/choose_partition                                select      finish
+#d-i partman/choose_partition                                select      Finish partitioning and write changes to disk
+d-i partman/confirm_write_new_label                         boolean     true
 d-i partman/confirm                                         boolean     true
 d-i partman/confirm_nooverwrite                             boolean     true
+d-i partman-lvm/confirm_nooverwrite                         boolean     true
+d-i partman-md/confirm_nooverwrite                          boolean     true
 
 ## Controlling how partitions are mounted
 # The default is to mount by UUID, but you can also choose "traditional" to
