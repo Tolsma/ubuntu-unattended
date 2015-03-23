@@ -22,7 +22,7 @@ editions. Other editions would require minor changes to the script though.
 * From your command line, run the following commands:
 
 ```
-$ wget https://raw.githubusercontent.com/Tolsma/ubuntu-unattended/master/create-iso.sh
+$ wget https://raw.githubusercontent.com/Tolsma/ubuntu-unattended/master/create-iso.sh -O ./create-iso.sh
 $ chmod +x create-iso.sh
 $ sudo ./create-iso.sh
 ```
