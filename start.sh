@@ -6,7 +6,7 @@ default_hostname="hosting"
 default_domain="tolsma.net"
 
 #eth0
-default_eth0_ipv4="82.94.249.66"
+default_eth0_ipv4="82.94.249.68"
 default_eth0_ipv4netmask="255.255.255.248"
 default_ipv4gateway="82.94.249.65"
 default_eth0_ipv6="2001:888:2000:47::4000:1"
