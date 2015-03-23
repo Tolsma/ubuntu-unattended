@@ -25,7 +25,7 @@ d-i debconf/language                                        string      en_US:en
 #d-i netcfg/choose_interface                                 select      auto
 
 # To pick a particular interface instead:
-d-i netcfg/choose_interface                                 select      eth1
+d-i netcfg/choose_interface                                 select      eth0
 
 # Any hostname and domain names assigned from dhcp take precedence over
 # values set here. However, setting the values still prevents the questions
@@ -173,7 +173,8 @@ d-i partman-auto/choose_recipe                              select      home
 # This makes partman automatically partition without confirmation, provided
 # that you told it what to do using one of the methods above.
 d-i partman-partitioning/confirm_write_new_label            boolean     true
-#d-i partman/choose_partition select finish
+#d-i partman/choose_partition                                select      finish
+d-i partman/choose_partition                                select      Finish partitioning and write changes to disk
 d-i partman/confirm                                         boolean     true
 d-i partman/confirm_nooverwrite                             boolean     true
 
@@ -181,7 +182,7 @@ d-i partman/confirm_nooverwrite                             boolean     true
 # The default is to mount by UUID, but you can also choose "traditional" to
 # use traditional device names, or "label" to try filesystem labels before
 # falling back to UUIDs.
-d-i partman/mount_style select uuid
+d-i partman/mount_style                                     select      uuid
 
 # grub boot loader
 d-i grub-installer/only_debian                              boolean     true
