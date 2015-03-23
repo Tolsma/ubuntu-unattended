@@ -23,7 +23,7 @@ spinner()
     printf "    \b\b\b\b"
 }
 
-# define download function
+# define download function.
 # courtesy of http://fitnr.com/showing-file-download-progress-using-wget.html
 download()
 {
