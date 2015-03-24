@@ -25,7 +25,7 @@ d-i debconf/language                                        string      en_US:en
 #d-i netcfg/choose_interface                                 select      auto
 
 # To pick a particular interface instead:
-d-i netcfg/choose_interface                                 select      eth0
+d-i netcfg/choose_interface                                 select      eth1
 
 # Any hostname and domain names assigned from dhcp take precedence over
 # values set here. However, setting the values still prevents the questions
@@ -36,7 +36,7 @@ d-i netcfg/get_domain                                       string      {{hostna
 # If you want to force a hostname, regardless of what either the DHCP
 # server returns or what the reverse DNS entry for the IP is, uncomment
 # and adjust the following line.
-#d-i netcfg/hostname                                         string      {{hostname}}
+d-i netcfg/hostname                                         string      {{hostname}}
 
 # To set a different link detection timeout (default is 3 seconds).
 # Values are interpreted as seconds.
@@ -49,7 +49,7 @@ d-i netcfg/dhcpv6_timeout                                   string      60
 
 # If you prefer to configure the network manually, uncomment this line and
 # the static network configuration below.
-d-i netcfg/disable_autoconfig                               boolean     true
+#d-i netcfg/disable_autoconfig                               boolean     true
 
 # If you want the preconfiguration file to work on systems both with and
 # without a dhcp server, uncomment these lines and the static network
@@ -60,11 +60,11 @@ d-i netcfg/disable_autoconfig                               boolean     true
 # Static network configuration.
 #
 # IPv4 example
-d-i netcfg/get_ipaddress                                    string      82.94.249.68
-d-i netcfg/get_netmask                                      string      255.255.255.248
-d-i netcfg/get_gateway                                      string      82.94.249.65
-d-i netcfg/get_nameservers                                  string      194.109.6.66
-d-i netcfg/confirm_static                                   boolean     true
+#d-i netcfg/get_ipaddress                                    string      82.94.249.68
+#d-i netcfg/get_netmask                                      string      255.255.255.248
+#d-i netcfg/get_gateway                                      string      82.94.249.65
+#d-i netcfg/get_nameservers                                  string      194.109.6.66
+#d-i netcfg/confirm_static                                   boolean     true
 #
 # IPv6 example
 #d-i netcfg/get_ipaddress                                    string      fc00::2
