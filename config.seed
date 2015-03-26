@@ -36,7 +36,7 @@ d-i netcfg/get_domain                                       string      {{hostna
 # If you want to force a hostname, regardless of what either the DHCP
 # server returns or what the reverse DNS entry for the IP is, uncomment
 # and adjust the following line.
-d-i netcfg/hostname                                         string      {{hostname}}
+#d-i netcfg/hostname                                         string      {{hostname}}
 
 # To set a different link detection timeout (default is 3 seconds).
 # Values are interpreted as seconds.
@@ -167,9 +167,21 @@ d-i partman/mount_style                                     select      uuid
 d-i grub-installer/only_debian                              boolean     true
 d-i grub-installer/with_other_os                            boolean     true
 
-# finish installation
+## finish installation
+# Avoid that last message about the install being complete.
 d-i finish-install/reboot_in_progress                       note
+
+# During installations from serial console, the regular virtual consoles
+# (VT1-VT6) are normally disabled in /etc/inittab.
 d-i finish-install/keep-consoles                            boolean     false
-d-i cdrom-detect/eject                                      boolean     true
-d-i debian-installer/exit/halt                              boolean     false
-d-i debian-installer/exit/poweroff                          boolean     false
+
+# This will prevent the installer from ejecting the CD during the reboot,
+# which is useful in some situations.
+d-i cdrom-detect/eject                                      boolean     false
+
+# This is how to make the installer shutdown when finished, but not
+# reboot into the installed system.
+d-i debian-installer/exit/halt                              boolean     true
+
+# This will power off the machine instead of just halting it.
+d-i debian-installer/exit/poweroff                          boolean     true
