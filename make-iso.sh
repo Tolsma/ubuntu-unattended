@@ -140,9 +140,9 @@ echo en > $tmp/iso_new/isolinux/lang
 
 # set late command
 late_command="in-target cp /cdrom/preseed/$start_script . ;\
-    in-target chmod +x $start_script ;\
-    in-target sh $start_script ;\
-    in-target rm $start_script ;"
+    in-target chmod +x $start_script;\
+    in-target sh $start_script;\
+    in-target rm $start_script;"
 
 # copy the config seed file to the iso
 cp -rT $tmp/$seed_file $tmp/iso_new/preseed/$seed_file
