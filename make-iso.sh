@@ -139,7 +139,7 @@ spinner $!
 echo en > $tmp/iso_new/isolinux/lang
 
 # set late command
-late_command="in-target cp /cdrom/preseed/$start_script /home/$username ;\
+late_command="cp /cdrom/preseed/$start_script /target/home/$username/$start_script;\
     in-target chmod +x /home/$username/$start_script;\
     in-target sh /home/$username/$start_script;\
     in-target rm /home/$username/$start_script;"
@@ -169,8 +169,9 @@ sed -i "s@{{timezone}}@$timezone@g" $tmp/iso_new/preseed/$seed_file
 # calculate checksum for seed file
 seed_checksum=$(md5sum $tmp/iso_new/preseed/$seed_file)
 
-# add the autoinstall option to the menu
-sed -i "/label install/ilabel autoinstall\n\
+# add the autoinstall option to the menu and add timeout of 1 sec (10 = 1 sec)
+sed -i "timeout 10\n\
+  /label install/ilabel autoinstall\n\
   menu label ^Autoinstall TTC Basic Ubuntu Server\n\
   kernel /install/vmlinuz\n\
   append file=/cdrom/preseed/ubuntu-server.seed initrd=/install/initrd.gz auto=true priority=high preseed/file=/cdrom/preseed/config.seed preseed/file/checksum=$seed_checksum --" $tmp/iso_new/isolinux/txt.cfg

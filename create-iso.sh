@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # file names & paths
-tmp="/iso-tmp"  # destination folder to store the final iso file
+tmp="./iso-tmp"  # destination folder to store the final iso file
 hostname="ubuntu"
 seed_file="config.seed"
 start_script="start.sh"
