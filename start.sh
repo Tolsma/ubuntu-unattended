@@ -139,16 +139,8 @@ apt-get -y dist-upgrade > /dev/null 2>&1
 apt-get -y autoremove > /dev/null 2>&1
 apt-get -y purge > /dev/null 2>&1
 
-# install vmware tools package
-apt-get -y install open-vm-tools > /dev/null 2>&1
-
-# install all other standard packages
-
 # remove myself to prevent any unintended changes at a later stage
-rm $0
+#rm $0
 
 # finish
-echo " DONE; rebooting ... "
-
-# reboot
-reboot
+echo " DONE... "
