@@ -169,13 +169,16 @@ sed -i "s@{{timezone}}@$timezone@g" $tmp/iso_new/preseed/$seed_file
 # calculate checksum for seed file
 seed_checksum=$(md5sum $tmp/iso_new/preseed/$seed_file)
 
-# add the autoinstall option to the menu and add timeout of 1 sec (10 = 1 sec)
-sed -i "/default install/cdefault autoinstall\n\
-timeout 0\n\
-label autoinstall\n\
-  menu label ^Autoinstall TTC Basic Ubuntu Server\n\
-  kernel /install/vmlinuz\n\
-  append file=/cdrom/preseed/ubuntu-server.seed initrd=/install/initrd.gz auto=true priority=high preseed/file=/cdrom/preseed/config.seed preseed/file/checksum=$seed_checksum --" $tmp/iso_new/isolinux/txt.cfg
+# add the autoinstall option to the menu and add timeout of 0 sec (10 = 1 sec)
+cat << EOF > $tmp/iso_new/isolinux/txt.cfg
+default autoinstall
+timeout 0
+label autoinstall
+  menu label ^Autoinstall TTC Basic Ubuntu Server
+  kernel /install/vmlinuz
+  append file=/cdrom/preseed/ubuntu-server.seed initrd=/install/initrd.gz auto=true priority=high preseed/file=/cdrom/preseed/config.seed preseed/file/checksum=$seed_checksum --
+
+EOF
 
 echo " creating the remastered iso"
 cd $tmp/iso_new
