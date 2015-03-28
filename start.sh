@@ -66,20 +66,19 @@ if ! grep -q "noninteractive" /proc/cmdline ; then
     read -ep " please enter Default IPv6 Gateway: " -i "$default_ipv6gateway" ipv6gateway
 
     # eth1
-    read -ep " please enter the IP address of eth1: " -i "$default_eth0_ipv4" eth1_ipv4
-    read -ep " please enter the Netmask of eth1: " -i "$default_eth0_ipv4netmask" eth1_ipv4netmask
+    read -ep " please enter the IP address of eth1: " -i "$default_eth1_ipv4" eth1_ipv4
+    read -ep " please enter the Netmask of eth1: " -i "$default_eth1_ipv4netmask" eth1_ipv4netmask
 
     # DNS resolvers
     read -ep " please enter Nameservers: " -i "$default_nameservers" nameservers
 
-fi
 
-# print status message
-echo " preparing your server; this may take a few minutes ..."
-
-# configure network
-file="/etc/network/interfaces"
-cat << EOF > $file
+    # print status message
+    echo " preparing your server; this may take a few minutes ..."
+    
+    # configure network
+    file="/etc/network/interfaces"
+    cat << EOF > $file
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 # The loopback network interface
@@ -109,28 +108,30 @@ gateway $ipv6gateway
 # The second network interface
 auto eth1
 iface eth1 inet static
-address $eth1_ip
-netmask $eth1_netmask
+address $eth1_ipv4
+netmask $eth1_ipv4netmask
 
 EOF
-#don't use any space before of after 'EOF' in the previous line
+    #don't use any space before of after 'EOF' in the previous line
+    
+    # set fqdn
+    fqdn="$hostname.$domain"
+    
+    # update hostname
+    echo "$hostname" > /etc/hostname
+    sed -i "s@ubuntu.ubuntu@$fqdn@g" /etc/hosts
+    sed -i "s@ubuntu@$hostname@g" /etc/hosts
+    hostname "$hostname"
+    
+    # reset network interfaces to new config
+    ifdown lo
+    ifup lo
+    ifdown eth0
+    ifup eth0
+    ifdown eth1
+    ifup eth1
 
-# set fqdn
-fqdn="$hostname.$domain"
-
-# update hostname
-echo "$hostname" > /etc/hostname
-sed -i "s@ubuntu.ubuntu@$fqdn@g" /etc/hosts
-sed -i "s@ubuntu@$hostname@g" /etc/hosts
-hostname "$hostname"
-
-# reset network interfaces to new config
-ifdown lo
-ifup lo
-ifdown eth0
-ifup eth0
-ifdown eth1
-ifup eth1
+fi
 
 # update repos
 apt-get -y update > /dev/null 2>&1

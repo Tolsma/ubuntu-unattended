@@ -170,7 +170,8 @@ sed -i "s@{{timezone}}@$timezone@g" $tmp/iso_new/preseed/$seed_file
 seed_checksum=$(md5sum $tmp/iso_new/preseed/$seed_file)
 
 # add the autoinstall option to the menu and add timeout of 1 sec (10 = 1 sec)
-sed -i "/label install/itimeout 10\n\
+sed -i "/default install/cdefault autoinstall\n\
+timeout 0\n\
 label autoinstall\n\
   menu label ^Autoinstall TTC Basic Ubuntu Server\n\
   kernel /install/vmlinuz\n\
